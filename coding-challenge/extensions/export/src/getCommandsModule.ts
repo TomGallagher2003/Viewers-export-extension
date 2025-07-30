@@ -1,11 +1,10 @@
-export default function getCommandsModule() {
+import { exportAsZip } from './commands/exportCommand';
+
+export default function getCommandsModule({ servicesManager }) {
   return {
     definitions: {
       triggerExport: {
-        commandFn: ({ servicesManager }) => {
-          // TODO
-          console.log('Export command invoked');
-        },
+        commandFn: () => exportAsZip({ servicesManager }),
         options: {},
         context: 'CORNERSTONE',
       },
