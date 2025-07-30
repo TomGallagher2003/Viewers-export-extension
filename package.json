@@ -11,7 +11,9 @@
       "platform/i18n",
       "extensions/*",
       "modes/*",
-      "addOns/externals/*"
+      "addOns/externals/*",
+      "coding-challenge/mode/export",
+      "coding-challenge/extensions/export"
     ],
     "nohoist": [
       "**/html-minifier-terser"
