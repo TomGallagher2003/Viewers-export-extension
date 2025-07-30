@@ -4,7 +4,7 @@
  * @param toolGroupService
  * @param commandsManager
  */
-function initToolGroups(extensionManager, toolGroupService, commandsManager) {
+function initToolGroups(extensionManager, toolGroupService) {
   const utilityModule = extensionManager.getModuleEntry(
     '@ohif/extension-cornerstone.utilityModule.tools'
   );

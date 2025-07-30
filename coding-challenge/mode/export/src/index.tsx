@@ -27,7 +27,7 @@ const extensionDependencies = {
   [extId]: '^0.0.1',
 };
 
-function modeFactory({ modeConfiguration }) {
+function modeFactory() {
   return {
     /**
      * Unique mode id
@@ -96,7 +96,7 @@ function modeFactory({ modeConfiguration }) {
     routes: [
       {
         path: id,
-        layoutTemplate: ({ location, servicesManager }) => {
+        layoutTemplate: () => {
           return {
             id: ohif.layout,
             props: {
