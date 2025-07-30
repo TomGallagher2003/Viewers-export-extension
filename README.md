@@ -47,7 +47,7 @@ _Export mode is not available for studies with non-image modalities._
 
 ### 3. Export as Zip
 In the main toolbar, the new export button is represented by a download icon.
-After adjusting the viewport to your liking with the other provided tools, 
+After adjusting the viewport to your liking with the other provided tools (Pan, Zoom, Window Level, Scrolling), 
 click this button to export the active viewport and metadata as a zip file.
 
 
