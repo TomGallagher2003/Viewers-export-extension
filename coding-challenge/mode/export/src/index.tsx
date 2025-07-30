@@ -4,7 +4,7 @@ import toolbarButtons from './toolbarButtons';
 import initToolGroups from './initToolGroups'
 
 // Export mode will not be valid for non-image modalities
-const NON_IMAGE_MODALITIES = ['ECG', 'SEG', 'RTSTRUCT', 'RTPLAN', 'PR'];
+const NON_IMAGE_MODALITIES = ['ECG', 'SEG', 'RTSTRUCT', 'RTPLAN', 'PR', 'OT'];
 
 const ohif = {
   layout: '@ohif/extension-default.layoutTemplateModule.viewerLayout',
@@ -87,7 +87,7 @@ function modeFactory() {
         valid: !!modalities_list.filter(modality => NON_IMAGE_MODALITIES.indexOf(modality) === -1)
           .length,
         description:
-          'The mode does not support studies that ONLY include the following modalities: SM, ECG, SEG, RTSTRUCT',
+          'The mode does not support studies that ONLY include the following modalities: SM, ECG, SEG, RTSTRUCT, OT',
       };
     },
     /**
