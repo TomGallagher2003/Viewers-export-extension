@@ -84,6 +84,7 @@ module.exports = (env, argv) => {
         path.resolve(__dirname, 'coding-challenge/extensions/export/node_modules'),
         path.resolve(__dirname, 'coding-challenge/extensions/export/node_modules'),
         path.resolve(__dirname, 'coding-challenge/modes/export/node_modules'),
+        path.resolve(__dirname, 'coding-challenge/mode/export/node_modules'),
       ],
     },
     plugins: [
