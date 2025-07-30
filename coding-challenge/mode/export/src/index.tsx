@@ -3,7 +3,8 @@ import { extId } from '../../../extensions/export/src/id'
 import toolbarButtons from './toolbarButtons';
 import initToolGroups from './initToolGroups'
 
-
+// Export mode will not be valid for non-image modalities
+const NON_IMAGE_MODALITIES = ['ECG', 'SEG', 'RTSTRUCT', 'RTPLAN', 'PR'];
 
 const ohif = {
   layout: '@ohif/extension-default.layoutTemplateModule.viewerLayout',
@@ -29,8 +30,7 @@ const extensionDependencies = {
 function modeFactory({ modeConfiguration }) {
   return {
     /**
-     * Mode ID, which should be unique among modes used by the viewer. This ID
-     * is used to identify the mode in the viewer's state.
+     * Unique mode id
      */
     id,
     routeName: id,
@@ -40,27 +40,33 @@ function modeFactory({ modeConfiguration }) {
      */
     displayName: 'Export Mode',
     /**
-     * Runs when the Mode Route is mounted to the DOM. Usually used to initialize
+     * Runs when the Mode Route is mounted to the DOM. Used to initialize
      * Services and other resources.
      */
     onModeEnter: ({ extensionManager, servicesManager, commandsManager }) => {
       const { toolbarService, toolGroupService } = servicesManager.services;
 
+      // initialise all tools
       initToolGroups(extensionManager, toolGroupService, commandsManager);
 
 
-      // register new buttons
+      // register all buttons in the toolbar
       toolbarService.register(toolbarButtons);
 
 
-      // update the primary section to include new buttons
+      // update the primary section with the registered buttons
       toolbarService.updateSection(
         toolbarService.sections.primary,
         toolbarButtons.map(b => b.id)
       );
     },
-
+    /**
+     * Used to clean up when leaving export mode
+     * @param servicesManager
+     */
     onModeExit: ({ servicesManager }) => {
+
+      // deregister the buttons when leaving export mode
       servicesManager.services.toolbarService.deregister(
         toolbarButtons.map(b => b.id)
       );
@@ -69,19 +75,23 @@ function modeFactory({ modeConfiguration }) {
       study: [],
       series: [],
     },
-
-    isValidMode: () => ({ valid: true }),
     /**
-     * Mode Routes are used to define the mode's behavior. A list of Mode Route
-     * that includes the mode's path and the layout to be used. The layout will
-     * include the components that are used in the layout. For instance, if the
-     * default layoutTemplate is used (id: '@ohif/extension-default.layoutTemplateModule.viewerLayout')
-     * it will include the leftPanels, rightPanels, and viewports. However, if
-     * you define another layoutTemplate that includes a Footer for instance,
-     * you should provide the Footer component here too. Note: We use Strings
-     * to reference the component's ID as they are registered in the internal
-     * ExtensionManager. The template for the string is:
-     * `${extensionId}.{moduleType}.${componentId}`.
+     * Does not support non-image modalities
+     * Supports the same modalities as the basic viewer
+     */
+    isValidMode: function ({ modalities }) {
+      const modalities_list = modalities.split('\\');
+
+      // Exclude non-image modalities
+      return {
+        valid: !!modalities_list.filter(modality => NON_IMAGE_MODALITIES.indexOf(modality) === -1)
+          .length,
+        description:
+          'The mode does not support studies that ONLY include the following modalities: SM, ECG, SEG, RTSTRUCT',
+      };
+    },
+    /**
+     * Default routing behaviour from the skeleton
      */
     routes: [
       {
@@ -105,8 +115,6 @@ function modeFactory({ modeConfiguration }) {
     ],
     /** List of extensions that are used by the mode */
     extensions: extensionDependencies,
-    /** HangingProtocol used by the mode */
-    // hangingProtocol: [''],
     /** SopClassHandlers used by the mode */
     sopClassHandlers: [ohif.sopClassHandler],
   };

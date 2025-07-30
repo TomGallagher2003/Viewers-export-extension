@@ -1,5 +1,8 @@
 import type { Button } from '@ohif/core/types';
 
+/**
+ * Standard definition from other modes - sets the given tool as active
+ */
 export const setToolActiveToolbar = {
   commandName: 'setToolActiveToolbar',
   commandOptions: {
@@ -7,6 +10,10 @@ export const setToolActiveToolbar = {
   },
 };
 
+/**
+ * Define the buttons available in the toolbar in the export mode
+ * Includes Pan,Zoom,WindowLevel from the basic viewer, along with the new Export button
+ */
 const toolbarButtons: Button[] = [
   {
     id: 'Pan',
