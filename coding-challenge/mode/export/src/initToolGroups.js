@@ -2,7 +2,6 @@
  * Initialises all included tools in the default group
  * @param extensionManager
  * @param toolGroupService
- * @param commandsManager
  */
 function initToolGroups(extensionManager, toolGroupService) {
   const utilityModule = extensionManager.getModuleEntry(
